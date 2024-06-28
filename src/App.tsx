@@ -3,7 +3,7 @@ import './App.css'
 
 import * as S from './styled'
 
-function App() {
+const App = () => {
   return <S.App>Ahoj</S.App>
 }
 
