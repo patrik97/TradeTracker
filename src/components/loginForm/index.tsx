@@ -1,12 +1,9 @@
 import { Formik, FormikHelpers } from 'formik'
 import PasswordInput from './passwordInput'
+import { FormValues } from './utils'
 
 import * as S from './styled'
 
-interface FormValues {
-  email: string
-  password: string
-}
 const LoginForm = () => {
   const onSubmit = async (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
     formikHelpers.setSubmitting(true)
@@ -17,10 +14,20 @@ const LoginForm = () => {
 
   return (
     <Formik<FormValues> onSubmit={onSubmit} initialValues={{ email: '', password: '' }}>
-      {({ isSubmitting }) => (
+      {({ isSubmitting, values }) => (
         <S.LoginForm>
-          <S.EmailInput id='email' name='email' label='Email' variant='outlined' margin='normal' type='email' />
-          <PasswordInput />
+          <S.EmailInput
+            id='email'
+            name='email'
+            label='Email'
+            variant='outlined'
+            margin='normal'
+            type='email'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              values.email = event.target.value
+            }}
+          />
+          <PasswordInput formValues={values} />
           <S.LoginButton disabled={isSubmitting} type='submit' variant='contained'>
             Přihlásit se
           </S.LoginButton>

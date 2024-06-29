@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import { IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { FormValues } from '../utils'
 
 import * as S from './styled'
 
-const PasswordInput = () => {
+type values = {
+  formValues: FormValues
+}
+
+const PasswordInput = (values: { formValues: FormValues }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -14,7 +19,13 @@ const PasswordInput = () => {
   }
 
   return (
-    <S.PasswordForm variant='outlined' margin='normal'>
+    <S.PasswordForm
+      variant='outlined'
+      margin='normal'
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+        values.formValues.password = event.target.value
+      }}
+    >
       <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
       <OutlinedInput
         id='outlined-adornment-password'
